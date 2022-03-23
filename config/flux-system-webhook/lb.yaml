@@ -4,6 +4,9 @@ kind: Service
 metadata:
   name: receiver
   namespace: flux-system
+  annotations:
+    # if using AWS, use an NLB
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
 spec:
   type: LoadBalancer
   selector:

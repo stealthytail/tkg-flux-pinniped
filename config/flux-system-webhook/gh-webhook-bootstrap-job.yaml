@@ -53,12 +53,19 @@ spec:
               | kubectl apply -f -
             fetch_token
           fi
-          
-          until IP="$( kubectl get svc "${LB_SERVICE}" -o jsonpath="{.status.loadBalancer.ingress[0].ip}" 2>/dev/null )"; do
-            echo ... waiting for svc/${LB_SERVICE} IP
+
+          fetch_host() {
+            HOST="$(
+              kubectl get svc "${LB_SERVICE}" \
+                -o template='{{ $lb := index .status.loadBalancer.ingress 0 }}{{ or $lb.ip $lb.hostname "" }}' \
+                2>/dev/null
+            )"
+          }
+          until fetch_host; do
+            echo "... waiting for svc/${LB_SERVICE} HOST (ip or hostname)"
             sleep 10
           done
-          echo "LoadBalancer IP: $IP"
+          echo "LoadBalancer HOST: $HOST"
           
           ROUTE="$( kubectl get receiver "${RECEIVER}" -o jsonpath="{.status.url}" )"
           echo "Route: $ROUTE"
@@ -81,7 +88,7 @@ spec:
             "config": {
               "content_type": "json",
               "secret": "${TOKEN}",
-              "url": "http://${IP}${ROUTE}"
+              "url": "http://${HOST}${ROUTE}"
             }
           }
           EOF
