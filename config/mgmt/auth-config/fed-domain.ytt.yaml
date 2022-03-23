@@ -5,8 +5,6 @@ metadata:
     namespace: pinniped-supervisor
 spec:
     issuer: https://pinniped.yaml.tv
-    tls:
-        secretName: tls
 sops:
     kms: []
     gcp_kms: []
@@ -16,14 +14,14 @@ sops:
         - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBPaU5vVWt3RWlQWGUzRUF5
-            dVZYV1BYc2swRlg3NmtqOUh4QTMveC9kK21rCnFYYUlBdkZNMUhXWTBnTzFkWHk2
-            VUtmMjRMOTJpRVNWVzU2d29qQnZBMDQKLS0tIDBtM01kdnpLZHNvNDl6UFBIZmpG
-            UFpxamVBWVZPY0hPbEwyaWlTaVc4UE0KyJJT0I3egVJvgw4dAGDGkgjOCx8b0UHr
-            rKbj4KKju60P+6gK0a4wb9a03VizZVSf+wq+AOwGhhlQmxRx+5p0yA==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBnZ3huSkFsZUlLek5EZFI3
+            bXVlY0xVWm9xVVRwZHJEQ2tRa29ISWlGL1FVCmgvYU9KNzJMWHIyd0Q0WWJwSzhj
+            RlkyMk5PYnJJeno2QTZrNU0ySnplSXMKLS0tIG9tOVJ5Q0Ivb01OY3J5SVJiQ2dR
+            TnZBQ2p5Y1EvM0YzRDdlZko1NkI4UTAKLQ1ym7YbaAuir0WLgkhStL3+7gMeuHuK
+            izGvse8mevnPdE2bVh3A4DbHdcdCYG8/yJ3v65pbqTibV9CSyfl1Fw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-03-23T08:34:50Z"
-    mac: ENC[AES256_GCM,data:05pv8srwL+grwwgTR30N8yiT6wiQ6LA2ctPFCx3+hW202j02S7qS3JDfFUVXMpFN4kJRUcNfJIoAN+QLVQli63EwgDXnDRWjStmXyk/yPfx1NdOET9Xa5p2uybXBj42JTDphyKLsjGp2EI0rm2ovwrVNp2NYcZ+YJauJ1cotd0M=,iv:xpR18cfaEBSdslPx151ZQ75+gwD7P9+tA866D5v5hsI=,tag:DqdWvm3YAoSZMTA7HqX3/g==,type:str]
+    lastmodified: "2022-03-23T10:07:20Z"
+    mac: ENC[AES256_GCM,data:pH1hFLwixpjcCJlwEPM1pEpnZyli8Cri66+ABJDtU0EuAh9BhX+WliByDqkfBchB7nDS1p/hlNrxCn4oN8v+Ak6dvT0CsApMAc8qbODK0H9yennI/EffwIxMz3uNtk++slf3yti9CWxE1FF60+4mKNvZ0H1I7GpLi0E56RzT5iI=,iv:J1M2qnE/dA6a/GIfLzTNigTEXF55ykz1Hf5LAs8ji5g=,tag:6BPhWRClMs5v51NV+IWlxg==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData|.*client.secret.*)$
     version: 3.7.2

@@ -10,7 +10,7 @@ spec:
     tls:
         - hosts:
             - dex.yaml.tv
-          secretName: tls
+          secretName: wildcard-yaml-tv
     rules:
         - host: dex.yaml.tv
           http:
@@ -31,14 +31,14 @@ sops:
         - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBEM1UvNWlWdUtXMks1Wi9I
-            dmlXU3RmRytld1hZL3U3cGlGcklzeXNlcEhjCkJmcTNnL21pV1BObkRtOWdqNkNq
-            bk5SSm9SSVpuU1BTbHFZRDF1QjNpNFUKLS0tIE5vY2R5WGZhay96bVF1cTlTQi9i
-            aG5PVXMxdXdFMW9wTW5IQnB4eUR1em8KmqGMcK6AJfI9nuJ+Tdvmxx2tKmPqofqB
-            LHnniLDMWlXP96JR8a3Xg0HDq0S11sH8Jcporf7sfP8TDLr3vFuQgA==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBHZlhvcHhoZnBaMmV5SzB4
+            N0xaKzNaZlh2WGtlSkhZbnJodURrRDhjUmhVCmFyd3FWaUxhVm0xV25JL244bTJD
+            VlNiN3lSdGVObU5BRmhUU3p3S2VLMUUKLS0tIHN5YUdva04vUUNldWNBVjZDWndT
+            MUZ0SjJmbWJHcTRJSG9sMFVLcDNqWjQKHxbsIOYEgRx06wN5Ay8mvUi8F6H1hDr4
+            AqUtw9klT/9xvTyq63rMMZ9i9xC94QsjHGz60zIN6vAM8MuqQ9xEQw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-03-23T08:34:50Z"
-    mac: ENC[AES256_GCM,data:XLt+OWjQ+/Ho0AkN+qC7UKhH6jEK8/lqWb8GIszMFmxMpYq3+xrjbUftEky8tZDw1khsjGdBwDWKm7fatMueZ28LCMJFZi8ujEsNCcfKTXz9ty1m16IddF5wT5VUHdziedJdMVd6HofTMLZx9LyeJi4P4Zoy7YmRT71UvPE7BCI=,iv:X56hn4jgdoqFD7HJsH7bQUw4XFn0ecGeOqXJDfsuM+k=,tag:B+LnF4KR9CLXQbgZKbbGqQ==,type:str]
+    lastmodified: "2022-03-23T10:07:19Z"
+    mac: ENC[AES256_GCM,data:Sr9aCDgSki2I0cWu+LSbglbYDglXQdlG1lBRbhNjMa6tSYEEEzFQgsGNX+LNH7Du8D6otGeiWbb6DwcXBNm0ILq5BZZ+dl4oPvk+Xk5mrlqVAivKfN8/qV1/1Wv5Bw3wug+6X70d0Egl10630sG+DjHpk5HnHsp4eIF+cBKfRN8=,iv:56oMwG6qYUdL4HdPmpCZgb0hbELBbbiKLAHXYoZgJZ0=,tag:WyB00/zDjcpxU24XuapRIw==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData|.*client.secret.*)$
     version: 3.7.2
