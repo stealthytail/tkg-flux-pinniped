@@ -1,0 +1,27 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@ def obj():
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pinniped-supervisor
+  namespace: pinniped-supervisor
+#@ end
+#@overlay/match by=overlay.subset(obj())
+---
+spec:
+  template:
+    spec:
+      containers:
+      #@overlay/match by="name"
+      - name: pinniped-supervisor
+        #! downgrade probes from HTTPS to HTTP
+        #! Ingress is used to upgrade TLS for external traffic
+        livenessProbe:
+          httpGet:
+            port: 8080
+            scheme: HTTP
+        readinessProbe:
+          httpGet:
+            port: 8080
+            scheme: HTTP

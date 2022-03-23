@@ -22,6 +22,7 @@ ytt-mgmt-auth-infra:
 			-f ../../carvel/__ytt_lib/pinniped-supervisor \
 			-f ../../carvel/__ytt_lib/pinniped-concierge \
 			-f ../../carvel/__ytt_lib/dex \
+			-f ../../carvel/overlays/pinniped-supervisor-http \
 			-f ../../carvel/overlays/dex \
 			--output-files auth-infra/ \
 		; find auth-infra/ -type f -exec sops --encrypt --in-place {} \; \
