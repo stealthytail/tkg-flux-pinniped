@@ -20,7 +20,7 @@ spec:
   tls:
   - hosts:
     - #@ data.values.dex_host
-    secretName: tls
+    secretName: #@ data.values.dex_tls_secret_name
   rules:
   - host: #@ data.values.dex_host
     http:

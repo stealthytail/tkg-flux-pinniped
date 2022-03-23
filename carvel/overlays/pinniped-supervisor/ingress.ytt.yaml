@@ -35,7 +35,7 @@ spec:
   tls:
   - hosts:
     - #@ data.values.pinniped_host
-    secretName: tls
+    secretName: #@ data.values.pinniped_supervisor_tls_secret_name
   rules:
   - host: #@ data.values.pinniped_host
     http:

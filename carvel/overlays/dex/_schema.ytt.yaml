@@ -19,6 +19,7 @@ github_loadAllGroups: false
 dex_client_id: pinniped
 dex_client_secret: pinniped-secret-abcdef-12345-abcdef-12345
 
+dex_tls_secret_name: tls
 #@schema/nullable
 dex_tls:
   crt: ""

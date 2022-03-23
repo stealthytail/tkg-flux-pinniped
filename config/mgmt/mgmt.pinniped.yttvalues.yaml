@@ -9,6 +9,7 @@ cluster_audience: my-unique-cluster-identifier-31249-25880
 ingress_class: ""
 contour:
     tls_cert_namespace: secure-ingress
+pinniped_supervisor_tls_secret_name: wildcard-yaml-tv
 sops:
     kms: []
     gcp_kms: []
@@ -24,8 +25,8 @@ sops:
             OElLL2hURHV2QThKbVFOVUZ5ejFlNm8KxtvfTt1EL2OCF8jBxtu8IqgTwDVzEo53
             uJx7qmfeAdq3IRDGe/2cFoIPXcAwTK9W/0I2Rtcmr0bRU8TF6DHRyg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-03-23T08:34:13Z"
-    mac: ENC[AES256_GCM,data:MY+HW0oY6ZhZ85M6dCBc/DSPyNe13GfdiUVVYZ/IdT9poXuEtEnm7UDzWRaTOndEr676L93u8vUosFWCPg86s/nZu+nsfqulOQuoLCsCXQozRN3w+AGv7L2d50+HxIOu2MrqX3CF8k0ErPqZorhhHdYkBcqEeAv56qWV5AgW8c8=,iv:LPGzTZmmdhJfpFESx0CnOnvDqcyjkkuNMpczCfmT81A=,tag:YHIPaFnBp3bJVzSUR2zXlg==,type:str]
+    lastmodified: "2022-03-23T10:03:44Z"
+    mac: ENC[AES256_GCM,data:PBy7r9UCWUNgCxiq5RFmdebDDRr88zKMy7h+vFIHYmKD4J4czSyMBbJSKEd8n46YUuD1vn8UMNKAqH9Sz3UDD5oIPZXL9XHFTMh4yAJPbKYgpqhnG/25BgzV7WiPge2Y7202u4L5obFoTRo25Gaw1GJMFZ1CFONlqtvXUJGuZAQ=,iv:JQldc+peGwj0SJjoYVY7hMVemSh4b6vgSHYUK6M0bBU=,tag:SacQTGjgVFJR8/rygI0c2g==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData|.*client.secret.*)$
     version: 3.7.2

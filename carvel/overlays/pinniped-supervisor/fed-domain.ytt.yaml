@@ -11,7 +11,9 @@ spec:
   #! Any path can be specified, which allows a single hostname to have multiple different issuers. The path is optional.
   issuer: #@ "https://" + data.values.pinniped_host
 
+  #@ if not data.values.contour.tls_cert_namespace:
   #! Optionally configure the name of a Secret in the same namespace, of type `kubernetes.io/tls`,
   #! which contains the TLS serving certificate for the HTTPS endpoints served by this OIDC Provider.
   tls:
-    secretName: tls
+    secretName: #@ data.values.pinniped_supervisor_tls_secret_name
+  #@ end

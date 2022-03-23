@@ -10,6 +10,7 @@ pinniped_host: pinniped-supervisor-172-0-0-1.sslip.io  #! no trailing slash
 dex_client_id: pinniped
 dex_client_secret: pinniped-secret-abcdef-12345-abcdef-12345
 
+pinniped_supervisor_tls_secret_name: tls
 #@schema/nullable
 pinniped_supervisor_tls:
   crt: ""
