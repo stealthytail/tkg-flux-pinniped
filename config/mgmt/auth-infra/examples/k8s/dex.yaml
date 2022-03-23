@@ -1,0 +1,263 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: dex
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBBRmhTK1FjdVhLcG8wbFpG
+            bHI3bks4QUUrbFpySCtoYXkxNDRnYzh3dUVnCk5xZk91NUJtRkJiRGx4WU84UmEz
+            Rm5ldTJZdlMycXdWWnI4UGgwS2dCakkKLS0tIDRkM3lEVnlLT1hZQ2dwMjNuOHFz
+            ZGNxL3VSVjJoYkY3c2NDZUZoQUlRdmsKeGsYfem1AWD9TQ36oLNJKRxa+RmzGVTm
+            IMd5gKJMAObJPRkc1XaOs9bj6zUATOOzHhzAqvfZJHNAYHs/d4muZg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-23T08:34:50Z"
+    mac: ENC[AES256_GCM,data:O4jOHqRRlTp8C1NsBW2ZM6SmYJZfwVnGxCNDdzsUngtbLjFhb7B7TUuAxf038SyxuhTXVQBPCiyU5EVRYpvj/EHGuThKLX5qgbF+UHBX+5njsfaqSxHIRdmDJz+vuhnM64Z3+KtmKG2aAWecIs2RJT+Vcs+PaZbKZGZWOuSrd0Y=,iv:i6LlIXkzcGnhfv2sAlwBjHARvqYdmMNyreXWIZwl0WM=,tag:3EHuYs7RrkFmtfubov1RlA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    labels:
+        app: dex
+    name: dex
+    namespace: dex
+spec:
+    replicas: 3
+    selector:
+        matchLabels:
+            app: dex
+    template:
+        metadata:
+            labels:
+                app: dex
+        spec:
+            serviceAccountName: dex
+            containers:
+                - image: ghcr.io/dexidp/dex:v2.30.0
+                  name: dex
+                  command:
+                    - /usr/local/bin/dex
+                    - serve
+                    - /etc/dex/cfg/config.yaml
+                  ports:
+                    - name: https
+                      containerPort: 5556
+                  volumeMounts:
+                    - name: config
+                      mountPath: /etc/dex/cfg
+                  env:
+                    - name: GITHUB_CLIENT_ID
+                      valueFrom:
+                        secretKeyRef:
+                            name: github-client
+                            key: client-id
+                    - name: GITHUB_CLIENT_SECRET
+                      valueFrom:
+                        secretKeyRef:
+                            name: github-client
+                            key: client-secret
+                  readinessProbe:
+                    httpGet:
+                        path: /healthz
+                        port: 5556
+                        scheme: HTTP
+            volumes:
+                - name: config
+                  secret:
+                    secretName: dex
+                    items:
+                        - key: config.yaml
+                          path: config.yaml
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBBRmhTK1FjdVhLcG8wbFpG
+            bHI3bks4QUUrbFpySCtoYXkxNDRnYzh3dUVnCk5xZk91NUJtRkJiRGx4WU84UmEz
+            Rm5ldTJZdlMycXdWWnI4UGgwS2dCakkKLS0tIDRkM3lEVnlLT1hZQ2dwMjNuOHFz
+            ZGNxL3VSVjJoYkY3c2NDZUZoQUlRdmsKeGsYfem1AWD9TQ36oLNJKRxa+RmzGVTm
+            IMd5gKJMAObJPRkc1XaOs9bj6zUATOOzHhzAqvfZJHNAYHs/d4muZg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-23T08:34:50Z"
+    mac: ENC[AES256_GCM,data:O4jOHqRRlTp8C1NsBW2ZM6SmYJZfwVnGxCNDdzsUngtbLjFhb7B7TUuAxf038SyxuhTXVQBPCiyU5EVRYpvj/EHGuThKLX5qgbF+UHBX+5njsfaqSxHIRdmDJz+vuhnM64Z3+KtmKG2aAWecIs2RJT+Vcs+PaZbKZGZWOuSrd0Y=,iv:i6LlIXkzcGnhfv2sAlwBjHARvqYdmMNyreXWIZwl0WM=,tag:3EHuYs7RrkFmtfubov1RlA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2
+---
+kind: Secret
+apiVersion: v1
+metadata:
+    name: dex
+    namespace: dex
+    annotations:
+        kapp.k14s.io/versioned: ""
+data:
+    config.yaml: ENC[AES256_GCM,data:A4/trSPP54kV9Pjmol69lY36c2/gjP/yLd3qhWizblzBpdXANbXJpXJJq6d7gLyjbPJY+7BmWViFEL4lwJcw38D2SwQH2mCosyq+gNnHCN6l0sUNeB8+pOAGwtYtgKgcJ4UhTqh3dAx+hJz+EKN4qW1PDP4KYcXISGF2UJsP3fj6VNVkwP/0wobqvvq6PaeLzz+yHkfazkB07xO2821xtTylP4uNJky24wRLl/Uc0DxC/pRdNTgYTUK3JvYNjHAw00uNxcSyLHoLNe7ZbnBKj4/SqV6UxTkQRlQFE0ng88koyTocF/G0RUUF0mrpJsEpBkSeG5NUPEwSsCQuGHJeD2Ogry9Cy+CigAYGmMeivRUpsiwjTjegfoW1WSweuKeEKdYBJjRh+/f4C5hqjtgQOv2Pehkkt3Y7Sn46TikAFJNHrMyOWLfqfkTE5INFmLIfHU1givkA7/la0iFhdDoc31b6L+vMAEd3BaDqQezRJgv/SuAtadXWJmHcUI/AaaZuXfWL7LpSmR+WMD7D77QvY32HHb/F4uX+4Rbmc3h9ngNcwfkX/dk3eLVVm39oe6c/3O68ONWVnKzDsah7wVJ0WFcoIM5YpD66kCrkOSvb4rVoUL5qMxhOHEycFFCJZmmfnAfNAQ5G2bA2eKwWQZdu6X4vRQAkz7dEFZzVBL96D/KnYG3kjJVvq/VBObtcHJ5xQJ/mjB2wjT6aJOn9En0jxxICJJaMcswlt4/ZYdxuKcTxnKAhx8OXGoyjof8ZOTb/uxtjJ6ajHWIJmSbFsXT4uDnk6ESl770I/2PjhfoS5j8cx3d2VHl7NRL2OCtPIDdsPA1GGHdRbZsvxuHAQ4yIl9s6Jmkz+X9aTV9RwCTCuppqmqq6kiQXYvOn7LZ06/gvydPRgLQO8bdAmdj/mJe/uA/P2apW9ac8ywQus2viNDUGbTy8Rs3S+BHwnEwqY7BvPQVQyQ2wFBU=,iv:sV88EphL/rbx44hDjLUBEUZ/5Wbr8xqkZkHSq9Nh0fU=,tag:Rs58WpSElVHvkbWfpzdFCQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBBRmhTK1FjdVhLcG8wbFpG
+            bHI3bks4QUUrbFpySCtoYXkxNDRnYzh3dUVnCk5xZk91NUJtRkJiRGx4WU84UmEz
+            Rm5ldTJZdlMycXdWWnI4UGgwS2dCakkKLS0tIDRkM3lEVnlLT1hZQ2dwMjNuOHFz
+            ZGNxL3VSVjJoYkY3c2NDZUZoQUlRdmsKeGsYfem1AWD9TQ36oLNJKRxa+RmzGVTm
+            IMd5gKJMAObJPRkc1XaOs9bj6zUATOOzHhzAqvfZJHNAYHs/d4muZg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-23T08:34:50Z"
+    mac: ENC[AES256_GCM,data:O4jOHqRRlTp8C1NsBW2ZM6SmYJZfwVnGxCNDdzsUngtbLjFhb7B7TUuAxf038SyxuhTXVQBPCiyU5EVRYpvj/EHGuThKLX5qgbF+UHBX+5njsfaqSxHIRdmDJz+vuhnM64Z3+KtmKG2aAWecIs2RJT+Vcs+PaZbKZGZWOuSrd0Y=,iv:i6LlIXkzcGnhfv2sAlwBjHARvqYdmMNyreXWIZwl0WM=,tag:3EHuYs7RrkFmtfubov1RlA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: dex
+    namespace: dex
+spec:
+    type: ClusterIP
+    ports:
+        - name: dex
+          port: 5556
+          protocol: TCP
+          targetPort: 5556
+    selector:
+        app: dex
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBBRmhTK1FjdVhLcG8wbFpG
+            bHI3bks4QUUrbFpySCtoYXkxNDRnYzh3dUVnCk5xZk91NUJtRkJiRGx4WU84UmEz
+            Rm5ldTJZdlMycXdWWnI4UGgwS2dCakkKLS0tIDRkM3lEVnlLT1hZQ2dwMjNuOHFz
+            ZGNxL3VSVjJoYkY3c2NDZUZoQUlRdmsKeGsYfem1AWD9TQ36oLNJKRxa+RmzGVTm
+            IMd5gKJMAObJPRkc1XaOs9bj6zUATOOzHhzAqvfZJHNAYHs/d4muZg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-23T08:34:50Z"
+    mac: ENC[AES256_GCM,data:O4jOHqRRlTp8C1NsBW2ZM6SmYJZfwVnGxCNDdzsUngtbLjFhb7B7TUuAxf038SyxuhTXVQBPCiyU5EVRYpvj/EHGuThKLX5qgbF+UHBX+5njsfaqSxHIRdmDJz+vuhnM64Z3+KtmKG2aAWecIs2RJT+Vcs+PaZbKZGZWOuSrd0Y=,iv:i6LlIXkzcGnhfv2sAlwBjHARvqYdmMNyreXWIZwl0WM=,tag:3EHuYs7RrkFmtfubov1RlA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+    labels:
+        app: dex
+    name: dex
+    namespace: dex
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBBRmhTK1FjdVhLcG8wbFpG
+            bHI3bks4QUUrbFpySCtoYXkxNDRnYzh3dUVnCk5xZk91NUJtRkJiRGx4WU84UmEz
+            Rm5ldTJZdlMycXdWWnI4UGgwS2dCakkKLS0tIDRkM3lEVnlLT1hZQ2dwMjNuOHFz
+            ZGNxL3VSVjJoYkY3c2NDZUZoQUlRdmsKeGsYfem1AWD9TQ36oLNJKRxa+RmzGVTm
+            IMd5gKJMAObJPRkc1XaOs9bj6zUATOOzHhzAqvfZJHNAYHs/d4muZg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-23T08:34:50Z"
+    mac: ENC[AES256_GCM,data:O4jOHqRRlTp8C1NsBW2ZM6SmYJZfwVnGxCNDdzsUngtbLjFhb7B7TUuAxf038SyxuhTXVQBPCiyU5EVRYpvj/EHGuThKLX5qgbF+UHBX+5njsfaqSxHIRdmDJz+vuhnM64Z3+KtmKG2aAWecIs2RJT+Vcs+PaZbKZGZWOuSrd0Y=,iv:i6LlIXkzcGnhfv2sAlwBjHARvqYdmMNyreXWIZwl0WM=,tag:3EHuYs7RrkFmtfubov1RlA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    name: dex
+rules:
+    - apiGroups:
+        - dex.coreos.com
+      resources:
+        - '*'
+      verbs:
+        - '*'
+    - apiGroups:
+        - apiextensions.k8s.io
+      resources:
+        - customresourcedefinitions
+      verbs:
+        - create
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBBRmhTK1FjdVhLcG8wbFpG
+            bHI3bks4QUUrbFpySCtoYXkxNDRnYzh3dUVnCk5xZk91NUJtRkJiRGx4WU84UmEz
+            Rm5ldTJZdlMycXdWWnI4UGgwS2dCakkKLS0tIDRkM3lEVnlLT1hZQ2dwMjNuOHFz
+            ZGNxL3VSVjJoYkY3c2NDZUZoQUlRdmsKeGsYfem1AWD9TQ36oLNJKRxa+RmzGVTm
+            IMd5gKJMAObJPRkc1XaOs9bj6zUATOOzHhzAqvfZJHNAYHs/d4muZg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-23T08:34:50Z"
+    mac: ENC[AES256_GCM,data:O4jOHqRRlTp8C1NsBW2ZM6SmYJZfwVnGxCNDdzsUngtbLjFhb7B7TUuAxf038SyxuhTXVQBPCiyU5EVRYpvj/EHGuThKLX5qgbF+UHBX+5njsfaqSxHIRdmDJz+vuhnM64Z3+KtmKG2aAWecIs2RJT+Vcs+PaZbKZGZWOuSrd0Y=,iv:i6LlIXkzcGnhfv2sAlwBjHARvqYdmMNyreXWIZwl0WM=,tag:3EHuYs7RrkFmtfubov1RlA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+    name: dex
+roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: dex
+subjects:
+    - kind: ServiceAccount
+      name: dex
+      namespace: dex
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBBRmhTK1FjdVhLcG8wbFpG
+            bHI3bks4QUUrbFpySCtoYXkxNDRnYzh3dUVnCk5xZk91NUJtRkJiRGx4WU84UmEz
+            Rm5ldTJZdlMycXdWWnI4UGgwS2dCakkKLS0tIDRkM3lEVnlLT1hZQ2dwMjNuOHFz
+            ZGNxL3VSVjJoYkY3c2NDZUZoQUlRdmsKeGsYfem1AWD9TQ36oLNJKRxa+RmzGVTm
+            IMd5gKJMAObJPRkc1XaOs9bj6zUATOOzHhzAqvfZJHNAYHs/d4muZg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-23T08:34:50Z"
+    mac: ENC[AES256_GCM,data:O4jOHqRRlTp8C1NsBW2ZM6SmYJZfwVnGxCNDdzsUngtbLjFhb7B7TUuAxf038SyxuhTXVQBPCiyU5EVRYpvj/EHGuThKLX5qgbF+UHBX+5njsfaqSxHIRdmDJz+vuhnM64Z3+KtmKG2aAWecIs2RJT+Vcs+PaZbKZGZWOuSrd0Y=,iv:i6LlIXkzcGnhfv2sAlwBjHARvqYdmMNyreXWIZwl0WM=,tag:3EHuYs7RrkFmtfubov1RlA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2

@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        app: pinniped-supervisor
+    name: pinniped-supervisor
+    namespace: pinniped-supervisor
+spec:
+    ports:
+        - port: 8080
+          protocol: TCP
+    selector:
+        app: pinniped-supervisor
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTYkRlOCt3V05vRjJtYlFU
+            cWR5TkVQeXpOekRaUnVxMHJUNjhEbVdPSWpFCjlSZmIrS3RGY2VMa01MRWtrOFFC
+            cmcySHFRU3JDZ2taSWtXQTR0WDlvTG8KLS0tIFB0b29RZ3A3MlNmcGpyRUxBZDdU
+            U3dBckZ1SERlVDRzY3dnR1JkNDh3SzQKcKnGyE5vAnDL2dTRSav9KdtUCXyN472C
+            kOgxpxp3GK6hyVqBlhlMoGsZFka3pr64Ucy3J0XBvEllVtdCeQyohw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-23T08:34:50Z"
+    mac: ENC[AES256_GCM,data:jFTSbm0agH/J5ekmQKvpmFgPsIDAKm993KVKS8Htd3/mZV9swS4ua3dfcpoEIPtlE2nvGX+C8vieKjYqO7Rv6YoZRhESNJZKQ4IrB+fkbpgZMmtrf8GlNkNqMOfhmQpnw+mIP+pMyxgSNVggldZaacLIsq8ZbhRIUQGRmrpnlXA=,iv:B+XMw9JAzaH/a0FvbhHJN8g1jbDOciAe7pgJHqz2xF8=,tag:Km8s/kv/MHYdb6lesISoNw==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: pinniped-supervisor
+    namespace: pinniped-supervisor
+    annotations:
+        ingress.kubernetes.io/force-ssl-redirect: "true"
+        projectcontour.io/tls-cert-namespace: secure-ingress
+spec:
+    tls:
+        - hosts:
+            - pinniped.yaml.tv
+          secretName: tls
+    rules:
+        - host: pinniped.yaml.tv
+          http:
+            paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                        name: pinniped-supervisor
+                        port:
+                            number: 8080
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTYkRlOCt3V05vRjJtYlFU
+            cWR5TkVQeXpOekRaUnVxMHJUNjhEbVdPSWpFCjlSZmIrS3RGY2VMa01MRWtrOFFC
+            cmcySHFRU3JDZ2taSWtXQTR0WDlvTG8KLS0tIFB0b29RZ3A3MlNmcGpyRUxBZDdU
+            U3dBckZ1SERlVDRzY3dnR1JkNDh3SzQKcKnGyE5vAnDL2dTRSav9KdtUCXyN472C
+            kOgxpxp3GK6hyVqBlhlMoGsZFka3pr64Ucy3J0XBvEllVtdCeQyohw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-23T08:34:50Z"
+    mac: ENC[AES256_GCM,data:jFTSbm0agH/J5ekmQKvpmFgPsIDAKm993KVKS8Htd3/mZV9swS4ua3dfcpoEIPtlE2nvGX+C8vieKjYqO7Rv6YoZRhESNJZKQ4IrB+fkbpgZMmtrf8GlNkNqMOfhmQpnw+mIP+pMyxgSNVggldZaacLIsq8ZbhRIUQGRmrpnlXA=,iv:B+XMw9JAzaH/a0FvbhHJN8g1jbDOciAe7pgJHqz2xF8=,tag:Km8s/kv/MHYdb6lesISoNw==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2

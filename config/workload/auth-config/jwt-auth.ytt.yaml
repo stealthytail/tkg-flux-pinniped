@@ -1,0 +1,7 @@
+apiVersion: authentication.concierge.pinniped.dev/v1alpha1
+kind: JWTAuthenticator
+metadata:
+  name: my-supervisor-authenticator
+spec:
+  issuer: https://pinniped.yaml.tv
+  audience: my-unique-cluster-identifier-25601-21712
