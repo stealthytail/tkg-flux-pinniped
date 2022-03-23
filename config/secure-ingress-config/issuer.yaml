@@ -1,0 +1,39 @@
+# https://cert-manager.io/docs/configuration/acme/dns01/route53/
+
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-prod
+  namespace: secure-ingress
+spec:
+  acme:
+    # # email for Let's Encrypt accounts is optional
+    # email: optional@example.com
+    # production
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # # staging
+    # server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: acme-key
+    solvers:
+    # example: cross-account zone management for example.com
+    # this solver uses ambient credentials (i.e. inferred from the environment or EC2 Metadata Service)
+    # to assume a role in a different account
+    - dns01:
+        route53:
+          region: us-east-1
+    #       hostedZoneID: DIKER8JEXAMPLE # optional, see policy above
+    #       role: arn:aws:iam::YYYYYYYYYYYY:role/dns-manager
+
+    # # this solver handles example.org challenges
+    # # and uses explicit credentials
+    # - dns01:
+    #     route53:
+    #       region: eu-central-1
+    #       accessKeyID: AKIAIOSFODNN7EXAMPLE
+    #       secretAccessKeySecretRef:
+    #         name: prod-route53-credentials-secret
+    #         key: secret-access-key
+    #       # you can also assume a role with these credentials
+    #       role: arn:aws:iam::YYYYYYYYYYYY:role/dns-manager

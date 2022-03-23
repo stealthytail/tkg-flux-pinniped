@@ -1,0 +1,26 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: secure-ingress-infra
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./config/secure-ingress-infra
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: packagerepos
+    - name: secure-ingress-pkgi-rbac
+  healthChecks:
+    - kind: Deployment
+      name: contour
+      namespace: projectcontour
+    - kind: Deployment
+      name: cert-manager
+      namespace: cert-manager
+    - kind: Deployment
+      name: external-dns
+      namespace: external-dns

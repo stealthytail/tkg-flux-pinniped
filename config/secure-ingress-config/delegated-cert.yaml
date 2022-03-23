@@ -1,0 +1,26 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-yaml-tv
+  namespace: secure-ingress
+spec:
+  secretName: wildcard-yaml-tv
+  issuerRef:
+    kind: Issuer
+    name: letsencrypt-prod
+  dnsNames:
+  - "yaml.tv"
+  - "*.yaml.tv"
+
+---
+apiVersion: projectcontour.io/v1
+kind: TLSCertificateDelegation
+metadata:
+  name: wildcard-yaml-tv
+  namespace: secure-ingress
+spec:
+  delegations:
+  - secretName: wildcard-yaml-tv
+    targetNamespaces:
+    - "*"

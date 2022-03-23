@@ -1,0 +1,31 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: contour
+  namespace: secure-ingress
+spec:
+  serviceAccountName: contour-deployer
+  packageRef:
+    refName: contour.community.tanzu.vmware.com
+    versionSelection:
+      constraints: 1.20.1
+      prereleases: {}
+  values:
+  - secretRef:
+      name: contour-values
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: contour-values
+  namespace: secure-ingress
+stringData:
+  values.yml: |
+    infrastructureProvider: aws
+    envoy:
+      service:
+        aws:
+          loadBalancerType: nlb
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "*.yaml.tv"

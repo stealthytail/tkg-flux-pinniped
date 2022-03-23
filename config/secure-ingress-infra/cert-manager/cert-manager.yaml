@@ -1,0 +1,64 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: cert-manager
+  namespace: secure-ingress
+  annotations:
+    ext.packaging.carvel.dev/ytt-paths-from-secret-name.0: cert-manager-overlay-iam-role
+spec:
+  serviceAccountName: cert-manager-deployer
+  packageRef:
+    refName: cert-manager.community.tanzu.vmware.com
+    versionSelection:
+      constraints: 1.6.1
+      prereleases: {}
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cert-manager-overlay-iam-role
+  namespace: secure-ingress
+stringData:
+  overlay.ytt.yaml: |
+    #@ load("@ytt:overlay", "overlay")
+
+    #@ def obj():
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: cert-manager
+    #@ end
+
+    #@overlay/match by=overlay.subset(obj())
+    #@overlay/match-child-defaults missing_ok=True
+    ---
+    metadata:
+      annotations:
+        iam.amazonaws.com/permitted: .*/cert-manager\.tce
+    
+
+    #@ def obj():
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: cert-manager
+    #@ end
+    
+    #@overlay/match by=overlay.subset(obj())
+    #@overlay/match-child-defaults missing_ok=True
+    ---
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: cert-manager.tce
+        spec:
+          containers:
+            #@overlay/match by="name"
+            - name: cert-manager
+              #@overlay/append:
+              args:
+                - --issuer-ambient-credentials=true
+                - --cluster-issuer-ambient-credentials=true 

@@ -1,0 +1,77 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: external-dns
+  namespace: secure-ingress
+  annotations:
+    ext.packaging.carvel.dev/ytt-paths-from-secret-name.0: external-dns-overlay-iam-role
+spec:
+  serviceAccountName: external-dns-deployer
+  packageRef:
+    refName: external-dns.community.tanzu.vmware.com
+    versionSelection:
+      constraints: 0.10.0
+      prereleases: {}
+  values:
+  - secretRef:
+      name: external-dns-values
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: external-dns-values
+  namespace: secure-ingress
+stringData:
+  values.yml: |
+    namespace: external-dns
+    deployment:
+      args:
+        - --provider=aws
+        - --policy=sync  # sync|upsert-only
+        - --registry=txt
+        - --txt-owner-id=leighc-aws
+        - --txt-prefix=external-dns-
+        - --source=service
+        - --source=ingress
+        - --source=contour-httpproxy
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: external-dns-overlay-iam-role
+  namespace: secure-ingress
+stringData:
+  overlay.ytt.yaml: |
+    #@ load("@ytt:overlay", "overlay")
+
+    #@ def obj():
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: external-dns
+    #@ end
+
+    #@overlay/match by=overlay.subset(obj())
+    #@overlay/match-child-defaults missing_ok=True
+    ---
+    metadata:
+      annotations:
+        iam.amazonaws.com/permitted: .*/external-dns\.tce
+
+    
+    #@ def obj():
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: external-dns
+    #@ end
+    
+    #@overlay/match by=overlay.subset(obj())
+    #@overlay/match-child-defaults missing_ok=True
+    ---
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: external-dns.tce
