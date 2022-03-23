@@ -11,8 +11,8 @@ directories:
     - examples/k8s/dex.yaml
   - path: pinniped-supervisor
     http:
-      url: https://get.pinniped.dev/v0.12.0/install-pinniped-supervisor.yaml
+      url: https://get.pinniped.dev/v0.15.0/install-pinniped-supervisor.yaml
   - path: pinniped-concierge
     http:
-      url: https://get.pinniped.dev/v0.12.0/install-pinniped-concierge.yaml
+      url: https://get.pinniped.dev/v0.15.0/install-pinniped-concierge.yaml
   
