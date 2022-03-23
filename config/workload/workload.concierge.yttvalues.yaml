@@ -1,0 +1,3 @@
+pinniped_host: pinniped.yaml.tv  #! no trailing slash
+#! Configure the concierge with a unique ID
+cluster_audience: my-unique-cluster-identifier-25601-21712

@@ -1,0 +1,13 @@
+#! Setting missing_ok for overlays allows differing schema files to merge
+#! when building multiple folders in a single ytt build
+#@overlay/match-child-defaults missing_ok=True
+#@data/values-schema
+---
+pinniped_host: pinniped-supervisor-172-0-0-1.sslip.io  #! no trailing slash
+
+#! Configure the concierge with a unique ID
+cluster_audience: my-unique-cluster-identifier-00000fffff
+
+#@schema/nullable
+pinniped_supervisor_tls:
+  crt: ""

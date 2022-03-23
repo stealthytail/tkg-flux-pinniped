@@ -1,0 +1,60 @@
+#@ load("@ytt:overlay", "overlay")
+
+#@ def obj():
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dex
+#@ end
+#@overlay/match by=overlay.subset(obj())
+---
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+      #@overlay/match by="name"
+      - name: dex
+        #! ports:
+        #! - name: https
+        #!   containerPort: 5556
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+
+        volumeMounts:
+        #@overlay/match by="name"
+        #@overlay/remove
+        - name: tls
+
+      volumes:
+      #@overlay/match by="name"
+      #@overlay/remove
+      - name: tls
+      #! Change the Dex config volume from ConfigMap to Secret
+      #@overlay/match by="name"
+      #@overlay/replace
+      - name: config
+        secret:
+          secretName: dex
+          items:
+          - key: config.yaml
+            path: config.yaml
+
+#@ def obj():
+apiVersion: v1
+kind: Service
+metadata:
+  name: dex
+  namespace: dex
+#@ end
+#@overlay/match by=overlay.subset(obj())
+---
+spec:
+  type: ClusterIP
+  ports:
+  #@overlay/match by="name"
+  - name: dex
+    #@overlay/remove
+    nodePort: 0

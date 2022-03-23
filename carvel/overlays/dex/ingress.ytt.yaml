@@ -1,0 +1,34 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dex
+  namespace: dex
+  annotations:
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    #@ if/end data.values.ingress_class:
+    kubernetes.io/ingress.class: #@ data.values.ingress_class
+    #@ if/end data.values.cert_manager.tls_acme:
+    kubernetes.io/tls-acme: "true"
+    #@ if/end data.values.cert_manager.cluster_issuer:
+    certmanager.k8s.io/cluster-issuer: #@ data.values.cert_manager.cluster_issuer
+    #@ if/end data.values.contour.tls_cert_namespace:
+    projectcontour.io/tls-cert-namespace: #@ data.values.contour.tls_cert_namespace
+spec:
+  tls:
+  - hosts:
+    - #@ data.values.dex_host
+    secretName: tls
+  rules:
+  - host: #@ data.values.dex_host
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dex
+            port:
+              name: dex

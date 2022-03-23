@@ -1,0 +1,4 @@
+creation_rules:
+    - path_regex: .*
+      encrypted_regex: ^(data|stringData|.*client.secret.*)$
+      age: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3

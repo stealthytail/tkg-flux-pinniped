@@ -1,0 +1,62 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:base64", "base64")
+
+#@ def updates():
+issuer: #@ "https://" + data.values.dex_host + ""
+
+#@overlay/replace
+web:
+  http: 0.0.0.0:5556
+
+enablePasswordDB: false
+#@overlay/remove
+staticPasswords: []
+
+#@overlay/replace
+connectors:
+- type: github
+  id: github
+  name: GitHub
+  config:
+    clientID: $GITHUB_CLIENT_ID
+    clientSecret: $GITHUB_CLIENT_SECRET
+    redirectURI: #@ "https://" + data.values.dex_host + "/callback"
+    loadAllGroups: #@ data.values.github_loadAllGroups
+    orgs:
+    #@ for/end org in data.values.github_orgs:
+    - name: #@ org
+
+#@overlay/replace
+staticClients:
+- name: #@ data.values.dex_client_id
+  id: #@ data.values.dex_client_id
+  secret: #@ data.values.dex_client_secret
+  redirectURIs:
+  - #@ "https://" + data.values.pinniped_host + "/callback"
+
+#@ end
+
+
+#@ def obj():
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dex
+  namespace: dex
+#@ end
+#@overlay/match by=overlay.subset(obj())
+---
+#! Change the Dex config volume from ConfigMap to Secret!
+kind: Secret
+metadata:
+  #@overlay/match missing_ok=True
+  annotations:
+    #@overlay/match missing_ok=True
+    kapp.k14s.io/versioned: ""
+data:
+  #! Overlay the original config from the ConfigMap with updates()
+  #! also, base64 encode the resulting YAML since we're changing the type to a Secret
+  #@overlay/replace via=lambda a,_: base64.encode(yaml.encode(overlay.apply(yaml.decode(a), updates())))
+  config.yaml:

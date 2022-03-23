@@ -1,0 +1,23 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:base64", "base64")
+---
+apiVersion: authentication.concierge.pinniped.dev/v1alpha1
+kind: JWTAuthenticator
+metadata:
+  name: my-supervisor-authenticator
+spec:
+
+  #! The value of the `issuer` field should exactly match the `issuer`
+  #! field of your Supervisor's FederationDomain.
+  issuer: #@ "https://" + data.values.pinniped_host
+
+  #! You can use any `audience` identifier for your cluster, but it is
+  #! important that it is unique for security reasons.
+  audience: #@ data.values.cluster_audience
+
+  #! If the TLS certificate of your FederationDomain is not signed by
+  #! a standard CA trusted by the Concierge pods by default, then
+  #! specify its CA here as a base64-encoded PEM.
+  #@ if/end data.values.pinniped_supervisor_tls:
+  tls:
+    certificateAuthorityData: #@ base64.encode( data.values.pinniped_supervisor_tls.crt )

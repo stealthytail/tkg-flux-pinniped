@@ -1,0 +1,18 @@
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+- path: __ytt_lib
+  contents:
+  - path: dex
+    git:
+      url: https://github.com/dexidp/dex
+      ref: master
+    includePaths:
+    - examples/k8s/dex.yaml
+  - path: pinniped-supervisor
+    http:
+      url: https://get.pinniped.dev/v0.12.0/install-pinniped-supervisor.yaml
+  - path: pinniped-concierge
+    http:
+      url: https://get.pinniped.dev/v0.12.0/install-pinniped-concierge.yaml
+  

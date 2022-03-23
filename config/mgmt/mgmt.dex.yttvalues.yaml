@@ -1,0 +1,40 @@
+#! no trailing slash
+pinniped_host: pinniped.yaml.tv
+#! no trailing slash
+dex_host: dex.yaml.tv
+#! Go to your Github account settings and create an OAuth app
+#! https://github.com/settings/developers
+github_client_id: 0a75f5628aaffe1d1d37
+github_client_secret: ENC[AES256_GCM,data:g0boz3bxhjm1RXKzQEki0/+ozboYGa96FTtiojimKaToUCrB/Ew1RA==,iv:Yp0Xgj+QymJdD7BzjndYB0DtknLh4LZG3rtKyUqK+cw=,tag:ou5lmzGATz8fcb/ozcFsSg==,type:str]
+#! If you granted access for your Oauth app to Organizations, you can allow Dex to read them all
+github_loadAllGroups: true
+#! Optionally, you can filter for a specific organizations by listing them here
+#! github_orgs:
+#! - stealthytail
+#! Set your own values for pinniped to talk to Dex
+dex_client_id: pinniped-9102
+dex_client_secret: ENC[AES256_GCM,data:yStJci9D2BFzgrpbWUgKHNUzb1N5wypSwncbRjUcJEQ=,iv:COTiXnBb4mpg1jb5c2Ung95x67PLjsr4tfjigreu2xU=,tag:Xyfx6cvODzVEcWDeHmXlUQ==,type:str]
+#! Configure the concierge with a unique ID
+ingress_class: ""
+contour:
+    tls_cert_namespace: secure-ingress
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAxdnJxTkZFUDdKSndVVzQw
+            Tkc3d04vejNNaVhGYngxbVlJcVorMG1xQ2hRCk1hVkJ4czBKSUlLSWlrM0lZd0Rj
+            bVVOWmc3OTFtQ0N5dngyczFNYldEVmMKLS0tIHVyaG05YXBKeDhpVEc3b0NNN2lp
+            UHRJTXZEZ0hkdzBRVDlsMWxvMTFtYUUKZ7pz8wKqcDqIGnQG8sQGRXn668rvx0P4
+            gbFHfO6btsqTAP1U9RzjvP85KH2MqtBdbP7WlVhDdGc3QZbTx06e/A==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-23T08:33:46Z"
+    mac: ENC[AES256_GCM,data:kgoO0kjfaKSSg9p/o9cEe1xvu9/qR3DiCmcN70n3XJiCsoz3BZVn5+QPFjoBQH7WHjkRJ5idIaIbCqleuhySmXzxBkINaJTiMgoP2xcQ7clc82C9T/m9sNZlYvHBasRCuIMgH+4fw41GxHiBB8YYrbaZhijHkA7TIfcB52w/FfM=,iv:OBF9PZ09v5Wo4SiC5xgZRC22615PNKybs5PP+eW6fk8=,tag:oHpQR4mFqdKDfTca0hgWpw==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2

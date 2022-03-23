@@ -1,0 +1,29 @@
+#! Setting missing_ok for overlays allows differing schema files to merge
+#! when building multiple folders in a single ytt build
+#@overlay/match-child-defaults missing_ok=True
+#@data/values-schema
+---
+dex_host: dex-172-0-0-1.sslip.io  #! no trailing slash
+pinniped_host: pinniped-supervisor-172-0-0-1.sslip.io  #! no trailing slash
+
+#! Set your own values for pinniped to talk to Dex
+dex_client_id: pinniped
+dex_client_secret: pinniped-secret-abcdef-12345-abcdef-12345
+
+#@schema/nullable
+pinniped_supervisor_tls:
+  crt: ""
+  key: ""
+
+#@schema/nullable
+dex_tls:
+  crt: ""
+
+cert_manager:
+  tls_acme: false
+  cluster_issuer: ""
+
+ingress_class: ""
+
+contour:
+  tls_cert_namespace: ""
