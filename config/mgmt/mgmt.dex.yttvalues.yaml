@@ -5,7 +5,7 @@ dex_host: dex.yaml.tv
 #! Go to your Github account settings and create an OAuth app
 #! https://github.com/settings/developers
 github_client_id: 0a75f5628aaffe1d1d37
-github_client_secret: ENC[AES256_GCM,data:g0boz3bxhjm1RXKzQEki0/+ozboYGa96FTtiojimKaToUCrB/Ew1RA==,iv:Yp0Xgj+QymJdD7BzjndYB0DtknLh4LZG3rtKyUqK+cw=,tag:ou5lmzGATz8fcb/ozcFsSg==,type:str]
+github_client_secret: ENC[AES256_GCM,data:Jq+eEmGA1O+YnUz2lu0K2zT3gtNLiRDHH4ZjnyZlGjTm/hr6D0ew+w==,iv:JTCZUA4FpoYkNc/CHSGBqWbkb9YgCj+kjaTWTY2/CpA=,tag:KewcCD3ADy3aleo/C7jPDQ==,type:str]
 #! If you granted access for your Oauth app to Organizations, you can allow Dex to read them all
 github_loadAllGroups: true
 #! Optionally, you can filter for a specific organizations by listing them here
@@ -34,8 +34,8 @@ sops:
             UHRJTXZEZ0hkdzBRVDlsMWxvMTFtYUUKZ7pz8wKqcDqIGnQG8sQGRXn668rvx0P4
             gbFHfO6btsqTAP1U9RzjvP85KH2MqtBdbP7WlVhDdGc3QZbTx06e/A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-03-23T10:03:04Z"
-    mac: ENC[AES256_GCM,data:geNXcJK8OW2v0FRPPsh0vtxVoTAwEFYThizojaA+DaKTSpVg4o0WMzR86pYXWoHU4xmDtafsvH2AInVYaGQLMFkiwzYXQD7sN+whVNpwDAiDBQRcTSZ88IZfz77ydrtNqUWnVrjYHmdMBkUmKigLV9oKeOlb6cbi72D1RMhxRKg=,iv:lQ7i1eijfvbjR5xlsrSVlFB/8FhzEUdTcBLAd4Hki7Y=,tag:I50+UZi78SVy2BRMHAuhDA==,type:str]
+    lastmodified: "2022-03-25T00:52:15Z"
+    mac: ENC[AES256_GCM,data:x1J/lg1fe1S1TlWA1VoZN+RvykTQMEcGg5a07o7BbNI9GTXfx1qu4J89tWyI0IhgGR/0QsE4Dwm7R3bcP1KAqLb9+QfP5vAJsX61wM4tpKQS6vV/29Lsvoco5f/GdYJDMCLg4R/VgcT4cv4YSVyFyy3TEpIUEun4lxP4svGAkRM=,iv:Dqgoh9Di6+UHIgLTLP3uDHI1JxUy5VUjCuTPvvoPAGg=,tag:StaX/8+ZXNMT9sSiSyum4w==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData|.*client.secret.*)$
     version: 3.7.2
