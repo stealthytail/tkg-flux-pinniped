@@ -12,6 +12,7 @@ spec:
     kind: GitRepository
     name: flux-system
   dependsOn:
+    - name: kiam
     - name: packagerepos
     - name: secure-ingress-pkgi-rbac
   healthChecks:
