@@ -6,4 +6,4 @@ metadata:
 spec:
   fetch:
     imgpkgBundle:
-      image: projects.registry.vmware.com/tce/main:0.10.2
+      image: projects.registry.vmware.com/tce/main:0.11.0
