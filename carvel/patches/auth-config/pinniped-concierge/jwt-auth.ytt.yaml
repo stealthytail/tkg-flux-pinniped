@@ -21,3 +21,4 @@ spec:
   #@ if/end data.values.pinniped_supervisor_tls:
   tls:
     certificateAuthorityData: #@ base64.encode( data.values.pinniped_supervisor_tls.crt )
+  

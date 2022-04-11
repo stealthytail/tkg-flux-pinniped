@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m0s
-  path: ./config/mgmt/auth-infra
+  path: ./config/mgmt/build/auth-infra
   prune: true
   sourceRef:
     kind: GitRepository

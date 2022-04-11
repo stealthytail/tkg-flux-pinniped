@@ -2,14 +2,14 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'Merge pull request #2446 from dexidp/update-base-image...'
-      sha: 897ae8d2a30f3e64b4c2d8d01dc911b5e2fcf476
+      commitTitle: 'Merge pull request #2428 from dexidp/update-ent...'
+      sha: a51ed2c4db5cabca3dd9b483b86a3a77bd5fa300
       tags:
-      - v2.31.0-29-g897ae8d2
+      - v2.31.0-45-ga51ed2c4
     path: dex
   - http: {}
     path: pinniped-supervisor
   - http: {}
     path: pinniped-concierge
-  path: __ytt_lib
+  path: _upstream/auth-infra
 kind: LockConfig

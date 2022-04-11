@@ -1,7 +1,7 @@
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
-- path: __ytt_lib
+- path: _upstream/auth-infra
   contents:
   - path: dex
     git:
@@ -15,4 +15,3 @@ directories:
   - path: pinniped-concierge
     http:
       url: https://get.pinniped.dev/v0.15.0/install-pinniped-concierge.yaml
-  

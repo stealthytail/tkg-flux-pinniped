@@ -1,0 +1,43 @@
+#! no trailing slash
+pinniped_host: pinniped.yaml.tv
+#! no trailing slash
+dex_host: dex.yaml.tv
+#! Go to your Github account settings and create an OAuth app
+#! https://github.com/settings/developers
+github_client_id: 0a75f5628aaffe1d1d37
+github_client_secret: ENC[AES256_GCM,data:6chPZrMpPlIthM+yHH5EcFCq3azj6N/vX+BRnRfY9pG4SMHAdOkGfg==,iv:gJYG3z+2Im1rycuDLvIcjc/J1AtMhIlleFYQIKjn73s=,tag:rMWVnGYgo97yARhxW5uftg==,type:str]
+#! If you granted access for your Oauth app to Organizations, you can allow Dex to read them all
+github_loadAllGroups: true
+#! Optionally, you can filter for a specific organizations by listing them here
+#! github_orgs:
+#! - stealthytail
+#! Set your own values for pinniped to talk to Dex
+dex_client_id: pinniped-9102
+dex_client_secret: ENC[AES256_GCM,data:Ocgj4kRnjlACucrdlQsobkgBlYJiAqkOBH4gOc3DGrM=,iv:n84d5zwcoppQjpedOdhZ6HEzaNZSAKnpcuNJpVj2mKM=,tag:KRChWh0KhrWngipsd+mr3A==,type:str]
+#! Configure the concierge with a unique ID
+cluster_audience: my-unique-cluster-identifier-31249-25880
+#! Setup delegated TLS from the secure-ingress stack
+contour:
+    tls_cert_namespace: secure-ingress
+dex_tls_secret_name: wildcard-yaml-tv
+pinniped_supervisor_tls_secret_name: wildcard-yaml-tv
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBkQ3RKTXVBa0hjTVljTEhO
+            dVBoZXU0TE1WT21DTDJNcXBwV2Z5YWdHUkRjClVNQVMvK0RrRlpuQjRHemJYcWhm
+            TGdvWjM0NHhMVmptbnc4b2FvMFhCRDgKLS0tIGY0RWVEMmtaNzg5bHcrdkViVld6
+            dGZUUkppVVdUYTlaVVdPZXBYZkcxVE0K2hWRu2W4D+K16ni8cqaVPHnC43Mt0Naq
+            2DsXOMvWagYB4FndpGve8Ur/qutXfWvL9K7FEd/4QDwcUO32yCDE+w==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-04-11T21:29:50Z"
+    mac: ENC[AES256_GCM,data:OfbAIJIlIVxwRmTdCrxdHpDL3rgKxbZmkdn7RuriwdXztWBdFgFtx2kht246q3j89mg0t753JUHSKFT6HwEiz11sLdIqTvpxwaOzfmRN5ckNugcA4t6JgefkagokRWjiCsaEXcyZA8+3gCE9yUvi4OPho9Qzmr8xsZenUUlFgz4=,iv:SCZvac5JYs7+DQZWWCXrgDjp1UnZKO/mBuvaBi1JBCk=,tag:jQG3gfFvLQO6tOciFKPhhg==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2
