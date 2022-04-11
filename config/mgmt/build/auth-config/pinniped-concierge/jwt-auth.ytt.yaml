@@ -1,0 +1,27 @@
+apiVersion: authentication.concierge.pinniped.dev/v1alpha1
+kind: JWTAuthenticator
+metadata:
+    name: my-supervisor-authenticator
+spec:
+    issuer: https://pinniped.yaml.tv
+    audience: my-unique-cluster-identifier-31249-25880
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvQ3RNTkt4SmdkVU85U1d0
+            b3NCOU9SVGNwVUJwUDJlazB1VndMSzR2RzJBClg0WlVCYUI4MDBOU0czdjRLdXhY
+            cWgydmVKaFFTWmJKZ3ppdTFIM3dsUGcKLS0tIHlSVCt6Y0MvNUhtVnh2RGFNQnUr
+            RFVIU0hnR3ErUXVpN1BiYzdoZGZveHcKkn4j10BIDESorX/b5wxDxH3mWPrCfeGo
+            woyBH5V3bTAVJgFG1BIHA3aM1yOpXkQU2Qpw03Wg3+WtsqVCTOonog==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-04-11T21:31:17Z"
+    mac: ENC[AES256_GCM,data:3eT/0u87ZhYx4TWnh9AGx7zTOWz5xkCVEwtO+D76agbNfD/FG4Chg368rwkvJIOFJREM9nQ/hl+HAPoKh5x8vc198PBqDWFj4Drz7+7QUfxNUP1+yaoPeDP8k6x2hlPOFg04ivqkm67pHJJmyD994rk53s6Me3fm5CnHptwo/AY=,iv:CF86pvenxNqSrmkbNZVqzM8H077AGdxvSDvEBO3wL24=,tag:FYzV3foF4O2F8iRUc2H07g==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2

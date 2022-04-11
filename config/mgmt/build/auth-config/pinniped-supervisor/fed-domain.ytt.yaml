@@ -1,0 +1,27 @@
+apiVersion: config.supervisor.pinniped.dev/v1alpha1
+kind: FederationDomain
+metadata:
+    name: my-provider
+    namespace: pinniped-supervisor
+spec:
+    issuer: https://pinniped.yaml.tv
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1e25ew05v62a720vhsetzrhalehzpsv6l6c5usw2mn4lley85ssnsajz2v3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBPenNOa3R5bEtnUTByQXhM
+            M0pQQUtIZlNrem9wZEw3VnNrNWdMRUhpUzBzCmZ6bGovaW1tOC81QTArTU41QU5Z
+            ZE53UjArQkVNNUYyZy9yU1FweTZpMWsKLS0tIDQ4OUlwNFQxY1ExcWdyZ2hzMC83
+            N3JDMXBQTWhWREMvSXNvU3gvaS9adVkKML9/LveR2qbNOfSUKG4FSbxeEPJv49wi
+            LsXje83aIZbhJoAsoo5HAzdrId5WdkdBz7D1r2rCLd+KGISOJ1xkuw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-04-11T21:31:17Z"
+    mac: ENC[AES256_GCM,data:/F9zoNLymlfKfK4AJvzVCChbWhwyKEqGFJtNLliuPwZnm6lefzucVc1EM6UMj/mc4jCoOhyjJjLFjIF8E7+yMLdL4LcSstQAETW/F8lOyfNN6ccQb6NE5ozWtM40Gs3hUs1XKLxjwOCFmPJdtNqzklUzBKx9xR4ihiJE2agXgl4=,iv:5jWHLsRqgehDBclEPYE4jZD03mz69XXrja5DTSZHE1k=,tag:42lzV42Nup5I/QDgxfOu5w==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData|.*client.secret.*)$
+    version: 3.7.2
