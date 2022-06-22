@@ -13,6 +13,7 @@ spec:
     name: flux-system
   dependsOn:
     - name: auth-infra
+    - name: secure-ingress-config
   decryption:
     provider: sops
     secretRef:
