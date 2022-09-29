@@ -10,7 +10,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: team-b
-  namespace: flux-system
+  namespace: vclusters
 spec:
   targetNamespace: team-b
   storageNamespace: team-b
