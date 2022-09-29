@@ -1,0 +1,28 @@
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team-b
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: team-b
+  namespace: flux-system
+spec:
+  targetNamespace: team-b
+  storageNamespace: team-b
+  chart:
+    spec:
+      chart: vcluster-k8s
+      version: 0.12.0
+      sourceRef:
+        kind: HelmRepository
+        name: stealthybox-charts
+  interval: 1h
+  values:
+    serviceCIDR: 100.64.0.0/13
+    vcluster:
+      image: rancher/k3s:v1.22.12-k3s1

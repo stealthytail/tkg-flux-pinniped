@@ -1,0 +1,18 @@
+
+# This namespace holds the HelmReleases for all of our team's vclusters
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vclusters
+
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: stealthybox-charts
+  namespace: vclusters
+spec:
+  type: oci
+  url:  oci://ghcr.io/stealthybox/charts
+  interval: 1h
