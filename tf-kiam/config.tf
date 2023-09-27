@@ -4,7 +4,7 @@ provider "aws" {
 
 variable "kiam_role_domain" {
   type    = string
-  default = ".tce"
+  default = ".kube-platform"
 }
 
 variable "controlplane_node_role_name" {

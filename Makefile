@@ -7,7 +7,7 @@ bootstrap: terraform install-mgmt-cluster-key
 	flux bootstrap github \
 		--token-auth \
 		--owner stealthytail \
-		--repository tce-flux-pinniped \
+		--repository tkg-flux-pinniped \
 		--path clusters/mgmt/
 
 terraform:

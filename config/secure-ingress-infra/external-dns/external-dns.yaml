@@ -57,7 +57,7 @@ stringData:
     ---
     metadata:
       annotations:
-        iam.amazonaws.com/permitted: .*/external-dns\.tce
+        iam.amazonaws.com/permitted: .*/external-dns\.kube-platform
 
     
     #@ def obj():
@@ -74,4 +74,4 @@ stringData:
       template:
         metadata:
           annotations:
-            iam.amazonaws.com/role: external-dns.tce
+            iam.amazonaws.com/role: external-dns.kube-platform

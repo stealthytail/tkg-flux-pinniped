@@ -2,7 +2,7 @@
 
 This terraform creates the necessary AWS objects to accompany a kiam installation within a Kubernetes cluster.
 
-The defaults are set to function well for a [Tanzu Community Edition](https://tanzucommunityedition.io) Management Cluster on AWS.
+The defaults are set to function well for a [Tanzu Kubernetes Grid](https://tanzu.vmware.com/kubernetes-grid) Management Cluster on AWS.
 See `config.tf` to set provider region, control-plane node role, and kiam role naming options.
 
 First, the code allows the Kubernetes Control Plane Nodes' AWS Role to assume the [kiam](https://github.com/uswitch/kiam) server Role.

@@ -34,7 +34,7 @@ spec:
         interface: antrea-gw0
         iptables: true
     server:
-      assumeRoleArn: "arn:aws:iam::106441901180:role/kiam.tce"
+      assumeRoleArn: "arn:aws:iam::106441901180:role/kiam.kube-platform"
       nodeSelector:
         node-role.kubernetes.io/control-plane: ""
       tolerations:

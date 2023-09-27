@@ -38,7 +38,7 @@ stringData:
     ---
     metadata:
       annotations:
-        iam.amazonaws.com/permitted: .*/cert-manager\.tce
+        iam.amazonaws.com/permitted: .*/cert-manager\.kube-platform
     
 
     #@ def obj():
@@ -55,7 +55,7 @@ stringData:
       template:
         metadata:
           annotations:
-            iam.amazonaws.com/role: cert-manager.tce
+            iam.amazonaws.com/role: cert-manager.kube-platform
         spec:
           containers:
             #@overlay/match by="name"
